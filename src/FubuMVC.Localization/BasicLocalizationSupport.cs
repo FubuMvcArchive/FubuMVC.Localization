@@ -25,7 +25,7 @@ namespace FubuMVC.Localization
                 x.SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
             });
 
-            _internalRegistry.Import<HtmlConventionRegistry>(x => x.Labels.Builder<LabelBuilder>());
+            _internalRegistry.Import<HtmlConventionRegistry>(x => x.Labels.Add(new LabelBuilder()));
             
         }
 

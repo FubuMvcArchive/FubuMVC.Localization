@@ -1,17 +1,17 @@
 using FubuLocalization;
-using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Elements;
 using HtmlTags;
 
 namespace FubuMVC.Localization
 {
-    public class LabelBuilder : ElementBuilder
+    public class LabelBuilder : ElementTagBuilder
     {
-        protected override bool matches(AccessorDef def)
-        {
-            return true;
-        }
+    	public override bool Matches(ElementRequest subject)
+    	{
+    		return true;
+    	}
 
-        public override HtmlTag Build(ElementRequest request)
+    	public override HtmlTag Build(ElementRequest request)
         {
             string header = LocalizationManager.GetHeader(request.Accessor.InnerProperty);
             return new HtmlTag("label").Attr("for", request.ElementId).Text(header);

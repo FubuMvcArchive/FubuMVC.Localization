@@ -1,5 +1,5 @@
 using FubuLocalization;
-using FubuMVC.Core.UI.Configuration;
+using FubuMVC.Core.UI.Elements;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
