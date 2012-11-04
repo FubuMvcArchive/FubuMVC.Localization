@@ -13,6 +13,7 @@
     <tags>fubumvc localization</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="0.9.8.1267" />
+	  <dependency id="FubuLocalization" version="0.9.5.104" />
     </dependencies>
   </metadata>
   <files>
