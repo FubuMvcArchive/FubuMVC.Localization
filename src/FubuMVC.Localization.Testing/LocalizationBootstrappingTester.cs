@@ -70,50 +70,8 @@ namespace FubuMVC.Localization.Testing
         {
             var list = graphWithBasicLocalizationAsIs.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();
 
-            list.ShouldContain(typeof(RegisterXmlDirectoryLocalizationStorage));
-            list.ShouldNotContain(typeof(SpinUpLocalizationCaches));
-        }
-
-        [Test]
-        public void override_the_storage_mechanism_loader()
-        {
-            var registry = new FubuRegistry();
-            registry.Import<BasicLocalizationSupport>(x =>
-            {
-                x.LoadLocalizationWith<StubLocalizationActivator>();
-            });
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-
-            var list = graph.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();
-
-            list.ShouldNotContain(typeof(RegisterXmlDirectoryLocalizationStorage));
-            list.ShouldContain(typeof(StubLocalizationActivator));
             list.ShouldContain(typeof(SpinUpLocalizationCaches));
-
-
         }
-
-        [Test]
-        public void override_the_storage_mechanism()
-        {
-            var registry = new FubuRegistry();
-            registry.Import<BasicLocalizationSupport>(x =>
-            {
-                x.LocalizationStorageIs<InMemoryLocalizationStorage>();
-            });
-            var graph = BehaviorGraph.BuildFrom(registry);
-
-
-            var list = graph.Services.ServicesFor<IActivator>().Select(x => x.Type).ToList();
-
-            list.ShouldNotContain(typeof(RegisterXmlDirectoryLocalizationStorage));
-            list.ShouldContain(typeof(SpinUpLocalizationCaches));
-
-            graph.Services.DefaultServiceFor<ILocalizationStorage>().Type.ShouldEqual(
-                typeof (InMemoryLocalizationStorage));
-        }
-
 
         public class StubLocalizationActivator : IActivator
         {

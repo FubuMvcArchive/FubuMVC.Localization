@@ -12,8 +12,6 @@ namespace FubuMVC.Localization
     public class BasicLocalizationSupport : IFubuRegistryExtension
     {
         private readonly FubuPackageRegistry _internalRegistry = new FubuPackageRegistry();
-        private bool _useTheDefaultStorageMechanism = true;
-        private ObjectDef _localizationLoader;
 
         public BasicLocalizationSupport()
         {
@@ -23,6 +21,8 @@ namespace FubuMVC.Localization
                 x.SetServiceIfNone<ILocalizationCache, LocalizationCache>();
                 x.SetServiceIfNone<ILocalizationMissingHandler, LocalizationMissingHandler>();
                 x.SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
+            
+                x.SetServiceIfNone<ILocalizationStorage, BottleAwareXmlLocalizationStorage>();
             });
 
             _internalRegistry.Import<HtmlConventionRegistry>(x => x.Labels.Add(new LabelBuilder()));
@@ -43,36 +43,11 @@ namespace FubuMVC.Localization
 
             registry.Services(x =>
             {
-                if (_useTheDefaultStorageMechanism)
-                {
-                    x.AddService<IActivator, RegisterXmlDirectoryLocalizationStorage>();
-                }
-                else
-                {
                     x.AddService<IActivator, SpinUpLocalizationCaches>();
-                }
-
-                if (_localizationLoader != null)
-                {
-                    x.AddService(typeof (IActivator), _localizationLoader);
-                }
-
-                
             });
 
             
         }
 
-        public void LoadLocalizationWith<T>() where T : IActivator
-        {
-            _localizationLoader = ObjectDef.ForType<T>();
-            _useTheDefaultStorageMechanism = false;
-        }
-
-        public void LocalizationStorageIs<T>() where T : ILocalizationStorage
-        {
-            _internalRegistry.Services(x => x.ReplaceService<ILocalizationStorage, T>());
-            _useTheDefaultStorageMechanism = false;
-        }
     }
 }
