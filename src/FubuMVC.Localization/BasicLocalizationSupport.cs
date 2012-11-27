@@ -1,52 +1,52 @@
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Bottles;
-using FubuCore;
 using FubuLocalization;
 using FubuLocalization.Basic;
 using FubuMVC.Core;
-using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
 
 namespace FubuMVC.Localization
 {
     public class BasicLocalizationSupport : IFubuRegistryExtension
     {
-        private readonly FubuPackageRegistry _internalRegistry = new FubuPackageRegistry();
-
-        public BasicLocalizationSupport()
-        {
-            _internalRegistry.Services(x =>
-            {
-                x.SetServiceIfNone(new CultureInfo("en-US"));
-                x.SetServiceIfNone<ILocalizationCache, LocalizationCache>();
-                x.SetServiceIfNone<ILocalizationMissingHandler, LocalizationMissingHandler>();
-                x.SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
-            
-                x.SetServiceIfNone<ILocalizationStorage, BottleAwareXmlLocalizationStorage>();
-            });
-
-            _internalRegistry.Import<HtmlConventionRegistry>(x => x.Labels.Add(new LabelBuilder()));
-            
-        }
+        private readonly IList<Action<ServiceRegistry>> _modifications = new List<Action<ServiceRegistry>>();
 
         public CultureInfo DefaultCulture
         {
             set
             {
-                _internalRegistry.Services(x => x.ReplaceService(value));
+                _modifications.Add(x => x.ReplaceService(value));
             }
         }
 
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            _internalRegistry.As<IFubuRegistryExtension>().Configure(registry);
-
-            registry.Services(x =>
-            {
-                    x.AddService<IActivator, SpinUpLocalizationCaches>();
-            });
-
+            registry.Services<BasicLocalizationServices>();
             
+            if(_modifications.Any())
+            {
+                registry.Services(x => _modifications.Each(modify => modify(x)));
+            }
+
+            registry.Import<HtmlConventionRegistry>(x => x.Labels.Add(new LabelBuilder()));
+        }
+
+        public class BasicLocalizationServices : ServiceRegistry
+        {
+            public BasicLocalizationServices()
+            {
+                SetServiceIfNone(new CultureInfo("en-US"));
+                SetServiceIfNone<ILocalizationCache, LocalizationCache>();
+                SetServiceIfNone<ILocalizationMissingHandler, LocalizationMissingHandler>();
+                SetServiceIfNone<ILocalizationProviderFactory, LocalizationProviderFactory>();
+                SetServiceIfNone<ILocalizationStorage, BottleAwareXmlLocalizationStorage>();
+
+                AddService<IActivator, SpinUpLocalizationCaches>();
+            }
         }
 
     }
