@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Localization", "FubuMVC.Localization\FubuMVC.Localization.csproj", "{3C249185-11C0-47CC-8F92-40888995D88F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Localization.Testing", "FubuMVC.Localization.Testing\FubuMVC.Localization.Testing.csproj", "{822236F9-9199-4C69-886F-DE750CDCBC96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Localization.Docs", "FubuMVC.Localization.Docs\FubuMVC.Localization.Docs.csproj", "{1EA611AB-93FB-4FE5-800F-CD2D517CDA79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,10 @@ Global
 		{822236F9-9199-4C69-886F-DE750CDCBC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{822236F9-9199-4C69-886F-DE750CDCBC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{822236F9-9199-4C69-886F-DE750CDCBC96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA611AB-93FB-4FE5-800F-CD2D517CDA79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA611AB-93FB-4FE5-800F-CD2D517CDA79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA611AB-93FB-4FE5-800F-CD2D517CDA79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA611AB-93FB-4FE5-800F-CD2D517CDA79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
