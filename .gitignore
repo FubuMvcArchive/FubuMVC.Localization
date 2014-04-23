@@ -28,3 +28,6 @@ fubu.cmd
 *.DotSettings.user
 logs
 Gemfile.lock
+src/FubuMVC.Localization.Docs/ripple.dependencies.config
+src/FubuMVC.Localization.Testing/fubu-content/
+missing.locale.config
